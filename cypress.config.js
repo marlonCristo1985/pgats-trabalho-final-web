@@ -9,7 +9,7 @@ module.exports = defineConfig({
     inlineAssets: true,
     overwrite: false,
     saveAllAttempts: false,
-    reportDir: 'cypress/reports/html', // pasta onde ficará o HTML
+    reportDir: 'cypress/reports/html'
   },
     e2e: {
       setupNodeEvents(on, config) {

@@ -1,8 +1,8 @@
 {
-  "name": "PGATS QA",
-  "email": "qa@qa.com",
+  "name": "qa automation",
+  "email": "qa-tester-1759531431123@test.com",
+  "password": "12345",
   "subject": "Testing",
   "message": "Testing json data",
-  "description": "Testing Testing Testing Testing",
-  "password": "12345"
+  "description": "Testing Testing Testing Testing"
 }
