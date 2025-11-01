@@ -1,15 +1,18 @@
 class Menu {
-  navegarParaLogin() {
+  irParaLogin() {
     cy.get('a[href="/login"]').click()
   }
 
-  efetuarLogout() {
+  realizarLogout() {
     cy.get('a[href="/logout"]').should('be.visible').click()
   }
 
-  navegarParaProdutos() {
+  irParaProdutos() {
     cy.get('a[href="/products"]').click()
-    cy.get('.title').should('have.text', 'All Products')
+  }
+
+  irParaContato() {
+    cy.get('a[href*=contact]').click()
   }
 
 }

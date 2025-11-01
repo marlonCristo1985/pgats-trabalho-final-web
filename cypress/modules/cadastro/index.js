@@ -1,14 +1,13 @@
 import { faker } from "@faker-js/faker";
 
 class Cadastro {
-  prencherFormularioDeCadastroUsuario(usuario) {
+  prencherFormularioDeCadastroUsuario() {
 
     const firstName = faker.person.firstName()
     const lastName = faker.person.lastName()
 
     cy.get('#id_gender1').check()
     cy.get('input#password').type('12345', { log: false })
-
     cy.get('select[data-qa="days"]').select('2')
     cy.get('select[data-qa="months"]').select('May')
     cy.get('select[data-qa="years"]').select('1999')
@@ -17,7 +16,7 @@ class Cadastro {
     cy.get('input#first_name').type(firstName)
     cy.get('input#last_name').type(lastName)
 
-    const dadosGerados = {
+    const novoUsuario = {
       firstName,
       lastName,
       company: `PGATS ${faker.company.name()}`,
@@ -31,19 +30,30 @@ class Cadastro {
       password: '12345'
     }
 
-    cy.get('input#company').type(dadosGerados.company)
-    cy.get('input#address1').type(dadosGerados.address1)
-    cy.get('input#address2').type(dadosGerados.address2)
-    cy.get('select#country').select(dadosGerados.country)
-    cy.get('input#state').type(dadosGerados.state)
-    cy.get('input#city').type(dadosGerados.city)
-    cy.get('[data-qa="zipcode"]').type(dadosGerados.zipcode)
-    cy.get('[data-qa="mobile_number"]').type(dadosGerados.mobile_number)
+    cy.get('input#company').type(novoUsuario.company)
+    cy.get('input#address1').type(novoUsuario.address1)
+    cy.get('input#address2').type(novoUsuario.address2)
+    cy.get('select#country').select(novoUsuario.country)
+    cy.get('input#state').type(novoUsuario.state)
+    cy.get('input#city').type(novoUsuario.city)
+    cy.get('[data-qa="zipcode"]').type(novoUsuario.zipcode)
+    cy.get('[data-qa="mobile_number"]').type(novoUsuario.mobile_number)
 
     cy.get('[data-qa="create-account"]').click()
 
-    this.dadosUsuario = dadosGerados
-    cy.wrap(dadosGerados).as('dadosUsuario')
+    this.dadosUsuario = novoUsuario
+    cy.wrap(novoUsuario).as('dadosUsuario')
+  }
+
+    validarEnderecoDeEntrega() {
+    const esperado = this.dadosUsuario || {}
+
+    cy.get(':nth-child(2) > .heading').should('have.text', 'Address Details');
+    cy.get('#address_delivery .address_firstname').should('contain.text', `${esperado.firstName} ${esperado.lastName}`);
+    cy.get('#address_delivery .address_address1').eq(0).should('contain.text', esperado.company);
+    cy.get('#address_delivery .address_address1').eq(1).should('contain.text', esperado.address1);
+    cy.get('#address_delivery .address_address1').eq(2).should('contain.text', esperado.address2);
+    cy.get('#address_delivery .address_phone').should('contain.text', esperado.mobile_number);
   }
 }
 
